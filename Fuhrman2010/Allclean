@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# clean cases
+rm -rf figures/
+
+cd Fuhrman2010_boundaryCondition/
+./Allclean
+
+cd ../PorousLayer_boundaryCondition/
+./Allclean
+
+cd ..

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Create the mesh
+blockMesh
+
+# create the intial time folder
+cp -r 0_org 0
+
+# Run pimpleFoam
+setFields
+funkySetFields -field porosity -expression 'pos().y <= 0.00203 ? 1-3.1415926/(2*sqrt(3))*(1-(2*pos().y+0.00294)/0.007) : 1' -time 0 # porous layer setup
+interIsoFoam > log
+funkySetFields -time 0:

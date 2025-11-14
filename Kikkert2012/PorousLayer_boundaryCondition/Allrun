@@ -1,0 +1,17 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+#------------------------------------------------------------------------------
+
+mkdir ./log
+
+cp -rf 0_orig 0
+
+blockMesh > log/blockMesh.out
+postProcess -func writeCellCentres -constant > log/writeCellCenters.out
+
+setFields > log/setFields.out
+funkySetFields -time 0 > log/funkySetFields.out
+decomposePar > log/decompose.out
+
+mpirun -np 32 interIsoFoam -parallel > log/run.out
+reconstructPar > log/reconstructPar.out

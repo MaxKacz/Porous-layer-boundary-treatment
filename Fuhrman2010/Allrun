@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# run cases
+cd Fuhrman2010_boundaryCondition/
+./Allrun
+
+cd ../PorousLayer_boundaryCondition/
+./Allrun
+
+cd ../../python/Fuhrman2010/
+python comparison_U_k_omega.py
+
+cd ../../Fuhrman2010/

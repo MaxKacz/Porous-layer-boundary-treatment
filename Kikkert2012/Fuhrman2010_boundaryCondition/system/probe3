@@ -1,0 +1,28 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+probe3
+{
+    start   (6.57417 0.13882 0);
+    end     (6.48809 1 0);
+    fields  (U alpha.water k grad(U) nut);
+
+    #includeEtc "caseDicts/postProcessing/graphs/sampleDict.cfg"
+
+    setConfig
+    {
+        axis    xyz;
+        nPoints	1000;
+    }
+
+    // Must be last entry
+    #includeEtc "caseDicts/postProcessing/graphs/graph.cfg"
+}
+
+
+// ************************************************************************* //

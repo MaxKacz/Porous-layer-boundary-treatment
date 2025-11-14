@@ -1,0 +1,41 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      funkySetFieldDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+expressions
+(
+  porosity
+  {
+    variables
+	(
+	"pi=3.14159265359;"
+	"pente=0.1;" 		//pente de la plage
+	"prop=0.35;"		//distance entre la paroi théorique et le sommet des grains (en proportion du diamètre médian) 
+	"d50=0.0013;"		//diamètre médian
+	"xBasePlage=5.1906;"	//position du pied de la plage (x)
+	
+	"a=pente;"
+	"b=prop*d50/cos(atan(pente))-pente*xBasePlage;"
+	"H=sqrt(1/(1/sqr(a*pos().x+b-pos().y)+1/sqr(pos().x-(pos().y-b)/a)));" //distance à la surface de la couche poreuse
+	
+	); 
+    field 	porosity;
+    expression 	"1-pi/(2*sqrt(3))*(2*H/d50)";
+    condition  	"pos().y <= a*pos().x+b";
+  }
+);
+
+// ************************************************************************* //
